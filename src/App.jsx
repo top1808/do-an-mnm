@@ -5,6 +5,7 @@ import Layout from "./layout/Layout";
 // import Product from "./pages/Product";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Product from "./pages/Product";
 
 const router = createBrowserRouter([
   {
@@ -15,10 +16,10 @@ const router = createBrowserRouter([
   //   path: "/cart",
   //   element: <div>cart</div>,
   // },
-  // {
-  //   path: "/product/:id",
-  //   element: <Product />,
-  // },
+  {
+    path: "/product/:id",
+    element: <Product />,
+  },
 ]);
 
 function App() {
