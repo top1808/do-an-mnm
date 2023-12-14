@@ -10,7 +10,7 @@ const Product = () => {
     let carts = JSON.parse(localStorage.getItem("carts")) || [];
     const items = {
       id: id,
-      name: "Product" + { id },
+      name: "Product " + id,
       price: 25,
       quantity: quantity,
     };
