@@ -1,14 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [carts, setCarts] = useState(
     JSON.parse(localStorage.getItem("carts")) || []
   );
 
-  const totalPrice = carts?.reduce((acc, elm) => {
+  const [totalPrice, setTotalPrice] = useState(carts?.reduce((acc, elm) => {
     acc += elm.price * elm.quantity;
     return acc;
-  }, 0);
+  }, 0))
+
+
+  const onRemove = (id) => {
+    const newCarts = carts.filter(cart => cart.id !== id)
+    setCarts(newCarts);
+    localStorage.setItem("carts", JSON.stringify(newCarts));
+    toast.error("Xoá sản phẩm thành công.")
+  }
+
+  const onChangeQuantity = (id, value) => {
+    const newQuantity = value;
+    const newCarts = carts.map(cart => ({
+        ...cart,
+        quantity: cart.id === id ? newQuantity : cart.quantity,
+    }))
+    setCarts(newCarts);
+    localStorage.setItem("carts", JSON.stringify(newCarts));
+  }
+
+//   useEffect(() => {
+//     setTotalPrice(carts?.reduce((acc, elm) => {
+//         acc += elm.price * elm.quantity;
+//         return acc;
+//       }, 0))
+//   }, [carts]);
 
   return (
     <div className="container mx-auto mt-10">
@@ -48,12 +74,13 @@ const Cart = () => {
                   </div>
                   <div className="flex flex-col justify-between ml-4 flex-grow">
                     <span className="font-bold text-sm">{cart.name}</span>
-                    <a
-                      href="#"
+                    <button
+                      type="button"
                       className="font-semibold hover:text-red-500 text-gray-500 text-xs"
+                      onClick={() => onRemove(cart.id)}
                     >
                       Remove
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div className="flex justify-center w-1/5">
@@ -61,6 +88,7 @@ const Cart = () => {
                     className="mx-2 border text-center w-8"
                     type="text"
                     value={cart.quantity}
+                    onChange={(e) => onChangeQuantity(cart.id, e.target.value)}
                   />
                 </div>
                 <span className="text-center w-1/5 font-semibold text-sm">
