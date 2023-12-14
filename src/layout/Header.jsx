@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <div className="w-full bg-blue-400 p-4 text-white flex justify-between items-center">
-      <div className="text-xl font-bold">APP</div>
+      <a href="/" className="text-xl font-bold">APP</a>
       <a
         href="/cart"
         className="relative inline-flex items-center p-3 text-sm font-medium text-center text-white rounded-lgfocus:ring-4 focus:outline-none"
