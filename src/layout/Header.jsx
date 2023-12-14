@@ -8,11 +8,11 @@ const Header = () => {
   );
   const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
-  // useEffect(() => {
-  //   window.addEventListener("storage", () => {
-  //     setCarts(JSON.parse(localStorage.getItem('carts')) || [])
-  //   })
-  // }, [])
+  useEffect(() => {
+    window.addEventListener("storage", () => {
+      setCarts(JSON.parse(localStorage.getItem('carts')) || [])
+    })
+  }, [])
 
   return (
     <div className="w-full bg-blue-400 p-4 text-white flex justify-between items-center">
@@ -42,7 +42,6 @@ const Header = () => {
         )}
       </div>
       
-
     </div>
   );
 };
