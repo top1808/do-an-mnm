@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <div className="w-full bg-blue-400 p-4 text-white flex justify-between items-center">
-      <div className="text-xl font-bold">APP</div>
+<a href="/" className="text-xl font-bold">APP</a>
       <div className="flex gap-12 items-center">
         <button
           type="button"
@@ -41,6 +41,8 @@ const Header = () => {
           </a>
         )}
       </div>
+      
+
     </div>
   );
 };
