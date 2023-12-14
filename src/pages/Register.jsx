@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const Login = () => {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+const users = [
+  {
+    username: "top123",
+    password: "123123",
+  },
+];
 
-  const [data, setData] = useState({ username: "", password: "" });
+const Register = () => {
+  const [data, setData] = useState({ username: "", password: "", confirm_password: ""});
 
   const onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -12,16 +17,12 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const findUser = users.find(
-      (user) =>
-        user.username === data.username && user.password === data.password
-    );
-    if (findUser) {
-      toast.success("Đăng nhập thành công");
-      localStorage.setItem("currentUser", JSON.stringify(findUser));
-    } else {
-      toast.error("Sai thông tin.");
-    }
+    if (!data.username || !data.password || !data.confirm_password) return toast.error("Vui long nhập đầy đủ thông tin");
+    if (data.password !== data.confirm_password) return toast.error("Mật khẩu không trùng khớp");
+    toast.success("Đăng ký thành công");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const newUsers = [...users, data];
+    localStorage.setItem("users", JSON.stringify(newUsers));
   };
 
   return (
@@ -29,7 +30,7 @@ const Login = () => {
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-center text-white">
           <span className="bg-gradient-to-r text-transparent from-blue-500 to-purple-500 bg-clip-text">
-            LogIn
+            Register
           </span>
         </h2>
         <form onSubmit={onSubmit}>
@@ -69,17 +70,35 @@ const Login = () => {
               />
             </div>
           </div>
+          <div className="mb-6">
+            <label
+              htmlFor="confirm_password"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              <i className="fas fa-lock mr-2"></i>Confirm password
+            </label>
+            <div>
+              <input
+                id="confirm_password"
+                type="password"
+                name="confirm_password"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter your confirm password"
+                onChange={onChange}
+              />
+            </div>
+          </div>
           <div className="flex items-center justify-center">
             <button
               type="submit"
               className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline w-full"
             >
-              Đăng nhập
+              Đăng ký
             </button>
           </div>
           <div className="mt-4 text-center">
-            <a href="/register" className="mt-4 text-blue-400 underline">
-              Đăng kí
+            <a href="/login" className="mt-4 text-blue-400 underline">
+              Đăng nhập
             </a>
           </div>
         </form>
@@ -88,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
