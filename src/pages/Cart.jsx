@@ -29,12 +29,12 @@ const Cart = () => {
     localStorage.setItem("carts", JSON.stringify(newCarts));
   }
 
-//   useEffect(() => {
-//     setTotalPrice(carts?.reduce((acc, elm) => {
-//         acc += elm.price * elm.quantity;
-//         return acc;
-//       }, 0))
-//   }, [carts]);
+  useEffect(() => {
+    setTotalPrice(carts?.reduce((acc, elm) => {
+        acc += elm.price * elm.quantity;
+        return acc;
+      }, 0))
+  }, [carts]);
 
   return (
     <div className="container mx-auto mt-10">
