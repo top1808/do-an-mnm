@@ -32,7 +32,7 @@ const Header = () => {
           <div className="text-white txt-base font-bold">
             {currentUser?.username} &nbsp;&nbsp;
             <button onClick={() => {
-              localStorage.setItem("currentUser", "");
+              localStorage.removeItem("currentUser", "");
               toast.success("Đăng xuất thành công")
             }}>Đăng xuất</button>
           </div>
