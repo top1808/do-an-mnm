@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cart from "./pages/Cart";
 import Product from "./pages/Product";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/product/:id",
