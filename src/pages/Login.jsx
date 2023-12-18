@@ -18,6 +18,7 @@ const Login = () => {
     );
     if (findUser) {
       toast.success("Đăng nhập thành công");
+      window.location.assign("/");
       localStorage.setItem("currentUser", JSON.stringify(findUser));
     } else {
       toast.error("Sai thông tin.");
