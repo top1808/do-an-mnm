@@ -6,34 +6,49 @@ const Cart = () => {
     JSON.parse(localStorage.getItem("carts")) || []
   );
 
-  const [totalPrice, setTotalPrice] = useState(carts?.reduce((acc, elm) => {
-    acc += elm.price * elm.quantity;
-    return acc;
-  }, 0))
-
+  const [totalPrice, setTotalPrice] = useState(
+    carts?.reduce((acc, elm) => {
+      acc += elm.price * elm.quantity;
+      return acc;
+    }, 0)
+  );
 
   const onRemove = (id) => {
-    const newCarts = carts.filter(cart => cart.id !== id)
+    const newCarts = carts.filter((cart) => cart.id !== id);
     setCarts(newCarts);
     localStorage.setItem("carts", JSON.stringify(newCarts));
-    toast.error("Xoá sản phẩm thành công.")
-  }
+    toast.error("Xoá sản phẩm thành công.");
+  };
 
   const onChangeQuantity = (id, value) => {
     const newQuantity = value;
-    const newCarts = carts.map(cart => ({
-        ...cart,
-        quantity: cart.id === id ? newQuantity : cart.quantity,
-    }))
+    const newCarts = carts.map((cart) => ({
+      ...cart,
+      quantity: cart.id === id ? newQuantity : cart.quantity,
+    }));
     setCarts(newCarts);
     localStorage.setItem("carts", JSON.stringify(newCarts));
-  }
+  };
+
+  const onCheckout = () => {
+    toast.success("Thanh toán thành công");
+    localStorage.removeItem("carts");
+    window.dispatchEvent(new Event("storage"));
+  };
 
   useEffect(() => {
-    setTotalPrice(carts?.reduce((acc, elm) => {
+    window.addEventListener("storage", () => {
+      setCarts(JSON.parse(localStorage.getItem('carts')) || [])
+    })
+  }, [])
+
+  useEffect(() => {
+    setTotalPrice(
+      carts?.reduce((acc, elm) => {
         acc += elm.price * elm.quantity;
         return acc;
-      }, 0))
+      }, 0)
+    );
   }, [carts]);
 
   return (
@@ -124,7 +139,10 @@ const Cart = () => {
               <span>Tổng tiền</span>
               <span>{totalPrice}$</span>
             </div>
-            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+            <button
+              className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+              onClick={onCheckout}
+            >
               Thanh toán
             </button>
           </div>
